@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+os.makedirs("plots", exist_ok=True)
 
 #we set seed for repeatability.
 np.random.seed(42)
@@ -46,6 +48,8 @@ print("Top 5 Customers by Total Orders")
 print(df.groupby("customer_id")["total_value"].sum().sort_values(ascending = False).head(5))
 
 #Graphs/Plots
+
+
 plt.figure(figsize=(16,10))
 
 #plot1: Summary of orders by month day
@@ -54,6 +58,7 @@ df.groupby("order_day")["total_value"].sum().plot(kind="bar", color="skyblue")
 plt.title("Total value of orders per day")
 plt.xlabel("Day of Month")
 plt.ylabel("Total Value in PLN")
+plt.savefig("plots/orders_by_day.png")
 
 #plot2: Top 5 Customers by total orders
 plt.subplot(2,2,2)
@@ -61,6 +66,7 @@ df.groupby("customer_id")["total_value"].sum().sort_values(ascending = False).he
 plt.title("Top 5 Customers")
 plt.xlabel("Customer ID")
 plt.ylabel("Shopping Value in PLN")
+plt.savefig("plots/top5_customers.png")
 
 #plot3: Histogram Order Value
 plt.subplot(2,2,3)
@@ -68,6 +74,7 @@ plt.hist(df["total_value"], bins=15, color = "lightgreen", edgecolor= "black")
 plt.title("Order Value Distribution")
 plt.xlabel("Order Value in PLN")
 plt.ylabel("Number of Orders")
+plt.savefig("plots/order_value.png")
 
 plt.tight_layout()
 plt.show()
